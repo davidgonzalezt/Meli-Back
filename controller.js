@@ -18,6 +18,7 @@ exports.getProductsByQuery = async (req, res) => {
       autor,
       categories,
       items: [],
+      breadcrumb: data.filters.length > 0 ? data.filters[0].values[0].path_from_root : []
     };
 
     datos.items = data.results.map((p) => {
@@ -55,7 +56,7 @@ exports.getProductById = async (req, res) => {
       getItem,
       getDescription,
     ]);
-
+    
     const datos = {
       autor,
       item: {

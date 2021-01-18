@@ -14,5 +14,5 @@ app.use('/api/items', require('./routes'));
 
 //initialize the app
 app.listen(PORT, ()=>{
-    console.log(`El servirdor esta corriendo en el puerto ${PORT}`)
+    console.log(`Servirdor corriendo en el puerto ${PORT}`)
 });

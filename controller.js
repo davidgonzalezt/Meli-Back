@@ -14,6 +14,7 @@ exports.getProductsByQuery = async (req, res) => {
     const { data } = await axios.get(
       `https://api.mercadolibre.com/sites/MLA/search?q=${formatQuery}`
     );
+
     const datos = {
       autor,
       categories,
@@ -48,17 +49,15 @@ exports.getProductById = async (req, res) => {
     const { id } = req.params;
 
     const getItem = axios.get(`https://api.mercadolibre.com/items/${id}`);
-    const getDescription = axios.get(
-      `https://api.mercadolibre.com/items/${id}/description`
-    );
+    const getDescription = axios.get(`https://api.mercadolibre.com/items/${id}/description`);
 
     const [dataGeneral, descripcion] = await Promise.all([
       getItem,
       getDescription,
     ]);
-    
+
     const {data: catagory} = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?category=${dataGeneral.data.category_id}`);
-    
+
     const datos = {
       autor,
       item: {
@@ -74,8 +73,8 @@ exports.getProductById = async (req, res) => {
         free_shipping: dataGeneral.data.shipping.free_shipping,
         sold_quantity: dataGeneral.data.sold_quantity,
         description: descripcion.data.plain_text,
-        breadcrumb: catagory.filters.length > 0 ? catagory.filters[0].values[0].path_from_root : []
       },
+      breadcrumb: catagory.filters.length > 0 ? catagory.filters[0].values[0].path_from_root : []
     };
 
     res.send(datos);

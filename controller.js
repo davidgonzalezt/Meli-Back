@@ -57,6 +57,8 @@ exports.getProductById = async (req, res) => {
       getDescription,
     ]);
     
+    const {data: catagory} = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?category=${dataGeneral.data.category_id}`);
+    
     const datos = {
       autor,
       item: {
@@ -72,6 +74,7 @@ exports.getProductById = async (req, res) => {
         free_shipping: dataGeneral.data.shipping.free_shipping,
         sold_quantity: dataGeneral.data.sold_quantity,
         description: descripcion.data.plain_text,
+        breadcrumb: catagory.filters.length > 0 ? catagory.filters[0].values[0].path_from_root : []
       },
     };
 
